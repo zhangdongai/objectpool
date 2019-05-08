@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="test">
+      <UniqueIdentifier>{08ca4a77-3781-448e-b98e-ed570c7f1158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{92efc398-8c3c-4b73-a0d6-10db148c40ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\pool">
+      <UniqueIdentifier>{0b86cc9c-6a66-48e5-8ea1-b28aeb3c68d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pool\object_pool_construct.h">
+      <Filter>include\pool</Filter>
+    </ClInclude>
+    <ClInclude Include="pool\object_pool.h">
+      <Filter>include\pool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\test\object_pool_test.h">
+      <Filter>test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\test\object_pool_test.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
