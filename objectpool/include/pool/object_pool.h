@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include <mutex>
+#include <utility>
 
 template <typename ElemType_,
           bool PreAllocate_ = true,
@@ -29,22 +30,21 @@ public:
         return &instance;
     }
 
-    ElemPtr_ Construct() {
+    template <typename... Args>
+    ElemPtr_ Construct(Args&&... args) {
         std::lock_guard<std::mutex> lock(mutex_);
         CheckConstruct();
 
         const int index = elem_idle_cont_.front();
-        elem_idle_cont_.pop_front();            
+        elem_idle_cont_.pop_front();
 
         if (elem_cont_[index].second != ElemState::INITALIZED)
-            new(elem_cont_[index].first.get()) ElemType_();
+            new(elem_cont_[index].first.get()) ElemType_(std::forward<Args>(args)...);
         elem_cont_[index].second = ElemState::OCCUPIED;
 
         ElemPtr_ elem_ptr = elem_cont_[index].first;
         return elem_ptr;
     }
-
-    #include "object_pool_construct.h"
 
 private:
     void PreAllocate() {
@@ -65,7 +65,7 @@ private:
         for (int32_t i = 0; i < alloc_count_; ++i) {
             ElemPtr_ elem_ptr(new ElemType_);
             elem_cont_.push_back(std::make_pair(elem_ptr, ElemState::INITALIZED));
-            elem_idle_cont_.push_back((int32_t)elem_cont_.size() - 1); 
+            elem_idle_cont_.push_back((int32_t)elem_cont_.size() - 1);
         }
 
         size_ = (int32_t)elem_cont_.size();

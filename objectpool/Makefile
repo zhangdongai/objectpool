@@ -12,7 +12,7 @@ CPPFLAGS=-D__LINUX__ \
 LINKFALGS=-lgtest -lpthread
 
 #CPPOBJS=$(shell find ./ -name "*.cpp" | awk -F".cpp" '{printf "%s.o\n", $$1}')
-CPPOBJS=$(shell find ./ -name "*.cpp")
+CPPOBJS=$(shell find ./test -name "*.cpp")
 
 all:
 	$(CC) $(CPPFLAGS) $(CPPOBJS) $(LINKFALGS) -o $(TARGET)
